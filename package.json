@@ -6,6 +6,9 @@
   "scripts": {
     "start": "nodemon -r dotenv/config index.js"
   },
+  "engines": {
+    "node": "~10.1.0"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
