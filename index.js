@@ -10,15 +10,20 @@ const context = () => {
   return { algoliaIndex, algoliaClient };
 };
 
+const enableEngine = !!process.env.ENGINE_API_KEY;
+
 new ApolloServer({
   typeDefs,
   resolvers,
   context,
   enableIntrospection: true,
-  tracing: true
+  tracing: enableEngine
 })
-  .listen({ port: process.env.PORT, engine: true })
+  .listen({ port: process.env.PORT, engine: enableEngine })
   .then(
-    serverInfo => console.log(`Server started at ${serverInfo.url}`),
+    serverInfo => {
+      console.log(`Server started: ${serverInfo.url}`);
+      console.log(`Engine enabled: ${enableEngine}`);
+    },
     reason => console.log(`Failed to start server: ${reason}`)
   );
