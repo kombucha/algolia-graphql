@@ -1,0 +1,24 @@
+{
+  "name": "algolia-graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -r dotenv/config index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "4.19.1",
+    "nodemon": "1.17.4",
+    "prettier": "1.12.1"
+  },
+  "dependencies": {
+    "algoliasearch": "3.27.1",
+    "apollo-server": "2.0.0-beta.1",
+    "dotenv": "5.0.1",
+    "graphql": "0.13.2",
+    "lodash": "4.17.10"
+  }
+}
