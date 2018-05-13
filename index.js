@@ -10,8 +10,14 @@ const context = () => {
   return { algoliaIndex, algoliaClient };
 };
 
-new ApolloServer({ typeDefs, resolvers, context, enableIntrospection: true })
-  .listen({ port: process.env.PORT })
+new ApolloServer({
+  typeDefs,
+  resolvers,
+  context,
+  enableIntrospection: true,
+  tracing: true
+})
+  .listen({ port: process.env.PORT, engine: true })
   .then(
     serverInfo => console.log(`Server started at ${serverInfo.url}`),
     reason => console.log(`Failed to start server: ${reason}`)

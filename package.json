@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "algoliasearch": "3.27.1",
+    "apollo-engine": "1.1.1",
     "apollo-server": "2.0.0-beta.1",
     "dotenv": "5.0.1",
     "graphql": "0.13.2",
