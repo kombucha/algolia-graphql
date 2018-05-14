@@ -1,9 +1,6 @@
 const { gql } = require("apollo-server");
 
 const typeDef = gql`
-  # extend type Query {
-  # }
-
   enum ACL {
     search
     browse
@@ -21,7 +18,7 @@ const typeDef = gql`
   type ApiKey {
     value: String!
     createdAt: Int! # really: a date
-    acl: ACL!
+    acl: [ACL]!
     validity: Int!
   }
 `;

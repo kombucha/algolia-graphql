@@ -5,9 +5,7 @@ const { typeDefs, resolvers } = require("./schema");
 
 const context = () => {
   const algoliaClient = algoliasearch(process.env.APP_ID, process.env.API_KEY);
-  const algoliaIndex = algoliaClient.initIndex(process.env.INDEX_NAME);
-
-  return { algoliaIndex, algoliaClient };
+  return { algoliaClient };
 };
 
 const enableEngine = !!process.env.ENGINE_API_KEY;

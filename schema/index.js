@@ -2,7 +2,10 @@
 const { gql } = require("apollo-server");
 const merge = require("lodash/merge");
 
-const { typeDef: Synonym, resolvers: synonymResolvers } = require("./synonym.js");
+const { typeDef: Index, resolvers: indexResolvers } = require("./algoliaIndex");
+const { typeDef: Settings, resolvers: settingsResolvers } = require("./settings");
+const { typeDef: Synonym, resolvers: synonymResolvers } = require("./synonym");
+const { typeDef: ApiKey, resolvers: apiKeyResolvers } = require("./apiKey");
 
 const Query = gql`
   type Query {
@@ -11,6 +14,6 @@ const Query = gql`
 `;
 
 module.exports = {
-  typeDefs: [Query, Synonym],
-  resolvers: merge({}, synonymResolvers)
+  typeDefs: [Query, Synonym, Index, Settings, ApiKey],
+  resolvers: merge({}, synonymResolvers, indexResolvers, settingsResolvers, apiKeyResolvers)
 };

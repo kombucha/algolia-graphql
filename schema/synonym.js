@@ -1,15 +1,6 @@
 const { gql } = require("apollo-server");
 
 const typeDef = gql`
-  extend type Query {
-    searchSynonyms(
-      query: String
-      types: [SynonymType]
-      page: Int
-      hitsPerPage: Int
-    ): SynonymResults!
-  }
-
   enum SynonymType {
     synonym
     oneWaySynonym
@@ -49,21 +40,9 @@ const typeDef = gql`
     placeholder: String!
     replacements: [String]!
   }
-
-  type SynonymResults {
-    hits: [Synonym]!
-    nbHits: Int
-  }
 `;
 
 const resolvers = {
-  Query: {
-    searchSynonyms: (_obj, args, { algoliaIndex }) => {
-      const { query = "", types, page = 0, hitsPerPage = 100 } = args;
-      const type = types ? types.join(",") : undefined;
-      return algoliaIndex.searchSynonyms({ query, type, page, hitsPerPage });
-    }
-  },
   Synonym: {
     __resolveType: obj => {
       const type = obj ? obj.type : "";
