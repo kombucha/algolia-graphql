@@ -91,9 +91,9 @@ const typeDef = gql`
     # Typos
 
     # Minimum number of characters a word in the query string must contain to accept matches with one typo.
-    minWordSizeForApprox1: Int!
+    minWordSizefor1Typo: Int!
     # Minimum number of characters a word in the query string must contain to accept matches with two typos.
-    minWordSizeForApprox2: Int!
+    minWordSizefor2Typos: Int!
     # Controls whether typo tolerance is enabled and how it is applied
     typoTolerance: TypoTolerance!
     # Whether to allow typos on numbers (“numeric tokens”) in the query string.
