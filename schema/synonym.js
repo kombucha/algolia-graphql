@@ -55,14 +55,17 @@ const typeDef = gql`
   }
 
   extend type Mutation {
+    # Create or update multiple synonyms.
     upsertSynonyms(
       indexName: String!
       synonyms: [SynonymInput!]!
       forwardToReplica: Boolean
     ): [Synonym]
 
+    # Remove a single synonym from an index using its object id.
     deleteSynonym(indexName: String!, forwardToReplica: Boolean, objectID: ID!): Boolean
 
+    # Remove all synonyms from an index.
     deleteAllSynonyms(indexName: String!, forwardToReplica: Boolean): Boolean
   }
 `;
