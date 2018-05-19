@@ -6,6 +6,7 @@ const { typeDef: Index, resolvers: indexResolvers } = require("./algoliaIndex");
 const { typeDef: Settings, resolvers: settingsResolvers } = require("./settings");
 const { typeDef: Synonym, resolvers: synonymResolvers } = require("./synonym");
 const { typeDef: ApiKey, resolvers: apiKeyResolvers } = require("./apiKey");
+const { typeDef: Date, resolvers: dateResolvers } = require("./date");
 
 const Query = gql`
   type Query {
@@ -14,6 +15,13 @@ const Query = gql`
 `;
 
 module.exports = {
-  typeDefs: [Query, Synonym, Index, Settings, ApiKey],
-  resolvers: merge({}, synonymResolvers, indexResolvers, settingsResolvers, apiKeyResolvers)
+  typeDefs: [Query, Date, Synonym, Index, Settings, ApiKey],
+  resolvers: merge(
+    {},
+    dateResolvers,
+    synonymResolvers,
+    indexResolvers,
+    settingsResolvers,
+    apiKeyResolvers
+  )
 };

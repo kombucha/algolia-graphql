@@ -12,14 +12,23 @@ const typeDef = gql`
   }
 
   type Index {
+    # Index name.
     name: String!
-    createdAt: String! # really it's a date
-    updatedAt: String! # really it's a date
+    # Index creation date.
+    createdAt: Date!
+    # Date of last update.
+    updatedAt: Date!
+    # Number of records contained in the index.
     entries: Int!
+    # Number of bytes of the index in minified format.
     dataSize: Int!
+    # Number of bytes of the index binary file.
     fileSize: Int!
+    # Last build time in seconds.
     lastBuildTimeS: Int!
+    # Number of pending indexing operations.
     numberOfPendingTasks: Int!
+    # A boolean which says whether the index has pending tasks.
     pendingTask: Boolean!
 
     settings: Settings
@@ -58,6 +67,8 @@ const resolvers = {
     }
   },
   Index: {
+    createdAt: index => new Date(index.createdAt),
+    updatedAt: index => new Date(index.createdAt),
     synonyms: (index, args, { algoliaClient }) => {
       const { query = "", types, page = 0, hitsPerPage = 100 } = args;
       const type = types ? types.join(",") : undefined;
