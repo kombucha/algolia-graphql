@@ -40,6 +40,31 @@ const typeDef = gql`
     placeholder: String!
     replacements: [String]!
   }
+
+  input SynonymInput {
+    objectID: ID!
+    type: SynonymType!
+
+    input: String
+    placeholder: String
+    word: String
+
+    corrections: [String!]
+    replacements: [String!]
+    synonyms: [String!]
+  }
+
+  extend type Mutation {
+    upsertSynonyms(
+      indexName: String!
+      synonyms: [SynonymInput!]!
+      forwardToReplica: Boolean
+    ): [Synonym]
+
+    deleteSynonym(indexName: String!, forwardToReplica: Boolean, objectID: ID!): Boolean
+
+    deleteAllSynonyms(indexName: String!, forwardToReplica: Boolean): Boolean
+  }
 `;
 
 const resolvers = {
@@ -60,6 +85,41 @@ const resolvers = {
           console.warn(`Unknown type: ${type}`);
           return "Synonym";
       }
+    }
+  },
+  Mutation: {
+    upsertSynonyms: (_, { indexName, synonyms, forwardToReplicas }, { algoliaClient }) => {
+      const algoliaIndex = algoliaClient.initIndex(indexName);
+
+      return algoliaIndex
+        .batchSynonyms(synonyms, { forwardToReplicas })
+        .then(({ taskID }) => algoliaIndex.waitTask(taskID))
+        .then(() => synonyms)
+        .catch(err => {
+          throw err.message;
+        });
+    },
+    deleteSynonym: (_, { indexName, forwardToReplicas, objectID }, { algoliaClient }) => {
+      const algoliaIndex = algoliaClient.initIndex(indexName);
+
+      return algoliaIndex
+        .deleteSynonym(objectID, { forwardToReplicas })
+        .then(({ taskID }) => algoliaIndex.waitTask(taskID))
+        .then(() => true)
+        .catch(err => {
+          throw err.message;
+        });
+    },
+    deleteAllSynonyms: (_, { indexName, forwardToReplicas }, { algoliaClient }) => {
+      const algoliaIndex = algoliaClient.initIndex(indexName);
+
+      return algoliaIndex
+        .clearSynonyms({ forwardToReplicas })
+        .then(({ taskID }) => algoliaIndex.waitTask(taskID))
+        .then(() => true)
+        .catch(err => {
+          throw err.message;
+        });
     }
   }
 };
