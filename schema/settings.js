@@ -64,6 +64,9 @@ const typeDef = gql`
     ranking: [String]
     # Specifies the custom ranking criterion.
     customRanking: [String]
+
+    # The current index primary (if this index is a replica)
+    primary: String
     # List of indices to which you want to replicate all write operations.
     replicas: [String]
 
@@ -186,6 +189,7 @@ const typeDef = gql`
     ranking: [String]
     # Specifies the custom ranking criterion.
     customRanking: [String]
+
     # List of indices to which you want to replicate all write operations.
     replicas: [String]
 
