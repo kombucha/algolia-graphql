@@ -17,7 +17,7 @@ const resolvers = {
       return value.toISOString();
     },
     parseLiteral(ast) {
-      return ast.kind === Kind.STRING ? new Date(ast.value) : null;
+      return ast.kind === Kind.STRING || ast.kind === Kind.INT ? new Date(ast.value) : null;
     }
   })
 };
