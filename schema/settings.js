@@ -291,9 +291,13 @@ const typeDef = gql`
   }
 
   extend type Mutation {
+    # Create or change an index’s settings.
     updateSettings(
+      # The index for which you're gonna change the settings
       indexName: String!
+      # A mapping of settings parameters you can use on an index.
       settings: SettingsInput!
+      # Whether to forward the same settings to the replica indices.
       forwardToReplicas: Boolean
     ): Settings
   }
