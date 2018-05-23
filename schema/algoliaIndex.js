@@ -3,12 +3,17 @@ const { gql } = require("apollo-server");
 const typeDef = gql`
   extend type Query {
     index(name: String!): Index
-    indexes(indexPrefix: String, page: Int): [Index]
+    indexes(indexPrefix: String, page: Int): IndexesResult!
   }
 
   type SynonymList {
     nodes: [Synonym]!
     total: Int
+  }
+
+  type IndexesResult {
+    nodes: [Index!]!
+    nbPages: Int!
   }
 
   type Index {
@@ -128,7 +133,12 @@ const resolvers = {
           method: "GET",
           url: `/1/indexes?prefix=${encodeURIComponent(indexPrefix)}&page=${page}`,
           hostType: "write",
-          callback: (err, data) => (err ? reject(err) : resolve(data ? data.items : []))
+          callback: (err, data) =>
+            err
+              ? reject(err)
+              : resolve(
+                  data ? { nodes: data.items, nbPages: data.nbPages } : { nodes: [], nbPages: 0 }
+                )
         });
       });
     }
